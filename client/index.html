@@ -11,14 +11,26 @@
   <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
   <link href="/stylesheets/angular-toastr.css" rel="stylesheet">
   <link href="/stylesheets/styles.css" rel="stylesheet">
+    <link href="/stylesheets/sidebar.css" rel="stylesheet">
+
 </head>
 <body>
 <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
   <div class="navbar-header">
+        <div ng-controller="SidebarController" class="sidebar" sidebar-directive="state" >
+        <a href="/#/home1" id="navigation-toggle" ng-if="isAuthenticated()" ng-click="toggleState()">Options</a>
+        <ul class="navigation">
+            <li class="navigation-items"> <a href="/">My Upcoming Trips</a> </li>
+            <li class="navigation-items"> <a href="/">Inspirations</a> </li>
+            <li class="navigation-items"> <a href="/">Travel Log</a> </li>
+            <li class="navigation-items"> <a href="/">Suggestions</a> </li>
+        </ul>
+    </div>
     <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> GrupTrav</a>
   </div>
-  <ul class="nav navbar-nav">
-    <li><a href="/#/">Home</a></li>
+  <ul class="nav navbar-nav ">
+    <li ng-if="!isAuthenticated()"><a href="/#/">Home</a></li>
+    <li ng-if="isAuthenticated()"><a href="/#/home1">Home</a></li>
     <li ng-if="isAuthenticated()"><a href="/#/feed">Feed</a></li>
     <li ng-if="isAuthenticated()"><a href="/#/groups">Groups</a></li>
     <li ng-if="isAuthenticated()"><a href="/#/profile">Profile</a></li>
@@ -30,6 +42,10 @@
   <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
     <li><a href="/#/logout">Logout</a></li>
   </ul>
+</div>
+
+<div class="container" >
+
 </div>
 
 <div ui-view></div>
@@ -48,12 +64,17 @@
 <script src="/app.js"></script>
 <script src="/directives/passwordStrength.js"></script>
 <script src="/directives/passwordMatch.js"></script>
+<script src="/directives/sidebar.js"></script>
 <script src="/controllers/home.js"></script>
+<script src="/controllers/home1.js"></script>
 <script src="/controllers/login.js"></script>
 <script src="/controllers/signup.js"></script>
 <script src="/controllers/logout.js"></script>
 <script src="/controllers/profile.js"></script>
 <script src="/controllers/navbar.js"></script>
+<script src="/controllers/sidebar.js"></script>
+<script src="/controllers/feed.js"></script>
+<script src="/controllers/groups.js"></script>
 <script src="/services/account.js"></script>
 </body>
 </html>

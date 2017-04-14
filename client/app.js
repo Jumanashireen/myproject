@@ -33,6 +33,14 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
         controller: 'HomeCtrl',
         templateUrl: 'partials/home.html'
       })
+     .state('home1', {
+        url: '/home1',
+        controller: 'Home1Ctrl',
+        templateUrl: 'partials/home1.html',
+        resolve: {
+          loginRequired: loginRequired
+        }
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'partials/login.html',

@@ -27,7 +27,7 @@ var userSchema = new mongoose.Schema({
   displayName: String,
   picture: String,
   facebook: String,
-  google: String,
+  google: String
 });
 
 userSchema.pre('save', function(next) {
@@ -227,6 +227,7 @@ app.post('/auth/google', function(req, res) {
             if (!user) {
               return res.status(400).send({ message: 'User not found' });
             }
+            user.email = profile.email;
             user.google = profile.sub;
             user.picture = user.picture || profile.picture.replace('sz=50', 'sz=200');
             user.displayName = user.displayName || profile.name;
@@ -243,6 +244,7 @@ app.post('/auth/google', function(req, res) {
             return res.send({ token: createJWT(existingUser) });
           }
           var user = new User();
+          user.email = profile.email;
           user.google = profile.sub;
           user.picture = profile.picture.replace('sz=50', 'sz=200');
           user.displayName = profile.name;
@@ -296,6 +298,7 @@ app.post('/auth/facebook', function(req, res) {
             if (!user) {
               return res.status(400).send({ message: 'User not found' });
             }
+            console.log(profile);
             user.facebook = profile.id;
             user.picture = user.picture || 'https://graph.facebook.com/v2.3/' + profile.id + '/picture?type=large';
             user.displayName = user.displayName || profile.name;
@@ -313,6 +316,7 @@ app.post('/auth/facebook', function(req, res) {
             return res.send({ token: token });
           }
           var user = new User();
+          user.email = profile.email;
           user.facebook = profile.id;
           user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
